@@ -11,7 +11,7 @@ class Node:
 # Search by key
 def search(root, key):
     if not root:
-        return "NULL"
+        return
     if key < root.key:
         return search(root.left, key)
     elif key > root.key:

@@ -78,10 +78,11 @@ def db_connect(path):
 
             result = search(db.root, key)
             
-            if result == "NULL":
-                print("(GET) Key not found")
-            else:
+            if result:
                 print(result)
+            else:
+                print("(GET) Key not found")
+                
         
         elif cmd == "put":
             key = input("(PUT) Key: ")
