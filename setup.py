@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Vault',
+    name='FStore',
     version='0.1.0',
     author='Colin Davis',
     author_email='colinmichaelsdavis@gmail.com',
@@ -15,7 +15,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'vault = vault.__main__:main'
+            'fstore = fstore.__main__:main'
         ]
     }
 )
