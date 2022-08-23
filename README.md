@@ -2,6 +2,4 @@
 A simple key-value store written in Python. 
 
 ## Usage
-Download the code and run main.py in the terminal as follows:
-```$ main.py [init/connect] [path/to/database]```
-The program will guide you through the rest!
+NOTE: Requires pip/pip3. Download the repository and run `$ pip3 install [path/to/repository]`. Now you can run `$ vault [init/connect] [path/to/database]`. The program will guide you through the rest!

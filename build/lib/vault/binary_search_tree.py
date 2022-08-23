@@ -88,7 +88,7 @@ def serialize(root):
     while len(q) > 0:
         cur = q.popleft()
         if cur:
-            s += str(cur.key) + ":" + str(cur.val)
+            result += str(cur.key) + ":" + str(cur.val)
             if cur.left:
                 q.append(cur.left)
             else:

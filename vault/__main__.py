@@ -3,7 +3,7 @@ import os
 import sys
 import zlib
 
-from binary_search_tree import *
+from . import binary_search_tree
 
 argparser = argparse.ArgumentParser(description="Key-value store")
 argsubparsers = argparser.add_subparsers(title="Commands", dest="command")
@@ -20,7 +20,7 @@ def main(argv=sys.argv[1:]):
 class Database():
 
     path = None
-    root = None
+    root = None # Root node
 
     def __init__(self, path):
         if not os.path.isdir(path):
@@ -34,7 +34,7 @@ class Database():
             data = zlib.decompress(file.read()).decode()
             file.close()
 
-        self.root = deserialize(data)
+        self.root = binary_search_tree.deserialize(data)
 
     def get_path(self, *path):
         return os.path.join(self.path, *path)
@@ -44,7 +44,7 @@ class Database():
         data_path = self.get_path("data")
         file = open(data_path, "wb")
 
-        string = serialize(self.root)
+        string = binary_search_tree.serialize(self.root)
 
         file.write(zlib.compress(string.encode()))
         file.close()
@@ -78,7 +78,7 @@ def db_connect(path):
         if cmd == "get":
             key = input("(GET) Key: ")
 
-            result = search(db.root, key)
+            result = binary_search_tree.search(db.root, key)
 
             if result:
                 print(result)
@@ -89,11 +89,11 @@ def db_connect(path):
         elif cmd == "put":
             key = input("(PUT) Key: ")
             val = input("(PUT) Value: ")
-            db.root = insert(db.root, key, val)
+            db.root = binary_search_tree.insert(db.root, key, val)
 
         elif cmd == "del":
             key = input("(DEL) Key: ")
-            db.root = delete(db.root, key)
+            db.root = binary_search_tree.delete(db.root, key)
 
         elif cmd == "quit":
             print("(QUIT) Shutting down.")

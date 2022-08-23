@@ -3,7 +3,7 @@ import os
 import sys
 import zlib
 
-from binary_search_tree import *
+from . import binary_search_tree
 
 argparser = argparse.ArgumentParser(description="Key-value store")
 argsubparsers = argparser.add_subparsers(title="Commands", dest="command")
@@ -12,13 +12,15 @@ argsubparsers.required = True
 def main(argv=sys.argv[1:]):
     print("hello")
     args = argparser.parse_args(argv)
-    if args.command == "init": cmd_init(args)
-    elif args.command == "connect": cmd_connect(args)
+    if args.command == "init":
+        cmd_init(args)
+    elif args.command == "connect":
+        cmd_connect(args)
 
 class Database():
 
     path = None
-    root = None
+    root = None # Root node
 
     def __init__(self, path):
         if not os.path.isdir(path):
@@ -28,11 +30,11 @@ class Database():
         data = ""
         data_path = self.get_path("data")
         if os.stat(data_path).st_size > 0:
-            f = open(data_path, "rb")
-            data = zlib.decompress(f.read()).decode()
-            f.close()
+            file = open(data_path, "rb")
+            data = zlib.decompress(file.read()).decode()
+            file.close()
 
-        self.root = deserialize(data)
+        self.root = binary_search_tree.deserialize(data)
 
     def get_path(self, *path):
         return os.path.join(self.path, *path)
@@ -40,12 +42,12 @@ class Database():
     # Serialize updated tree and write to data file
     def save(self):
         data_path = self.get_path("data")
-        f = open(data_path, "wb")
+        file = open(data_path, "wb")
 
-        s = serialize(self.root)
+        string = binary_search_tree.serialize(self.root)
 
-        f.write(zlib.compress(s.encode()))
-        f.close()
+        file.write(zlib.compress(string.encode()))
+        file.close()
 
 def db_init(path):
     print("(INIT)")
@@ -54,12 +56,12 @@ def db_init(path):
         raise Exception("%s already exists" % path)
     os.makedirs(path)
 
-    f = open(os.path.join(path, "meta"), "x")
-    f.close()
-    f = open(os.path.join(path, "data"), "x")
-    f.close()
-    f = open(os.path.join(path, "logs"), "x")
-    f.close()
+    file = open(os.path.join(path, "meta"), "x")
+    file.close()
+    file = open(os.path.join(path, "data"), "x")
+    file.close()
+    file = open(os.path.join(path, "logs"), "x")
+    file.close()
 
 def db_connect(path):
     print("(CONNECT)")
@@ -76,8 +78,8 @@ def db_connect(path):
         if cmd == "get":
             key = input("(GET) Key: ")
 
-            result = search(db.root, key)
-            
+            result = binary_search_tree.search(db.root, key)
+
             if result:
                 print(result)
             else:
@@ -87,11 +89,11 @@ def db_connect(path):
         elif cmd == "put":
             key = input("(PUT) Key: ")
             val = input("(PUT) Value: ")
-            db.root = insert(db.root, key, val)
+            db.root = binary_search_tree.insert(db.root, key, val)
 
         elif cmd == "del":
             key = input("(DEL) Key: ")
-            db.root = delete(db.root, key)
+            db.root = binary_search_tree.delete(db.root, key)
 
         elif cmd == "quit":
             print("(QUIT) Shutting down.")

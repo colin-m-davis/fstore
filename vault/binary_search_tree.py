@@ -82,13 +82,13 @@ def serialize(root):
     if not root:
         return ""
     
-    s = ""
+    result = ""
     q = deque()
     q.append(root)
     while len(q) > 0:
         cur = q.popleft()
         if cur:
-            s += str(cur.key) + ":" + str(cur.val)
+            result += str(cur.key) + ":" + str(cur.val)
             if cur.left:
                 q.append(cur.left)
             else:
@@ -98,15 +98,15 @@ def serialize(root):
             else:
                 q.append(None)
         else:
-            s += "NULL:NULL"
-        s += ","
+            result += "NULL:NULL"
+        result += ","
     
-    return s
+    return result
 
 # Deserialize tree from string
-def deserialize(s):
+def deserialize(string):
     # Parse string into array of strings
-    tmp = s.split(",")
+    tmp = string.split(",")
     data = []
 
     for i in range(len(tmp)-1):
