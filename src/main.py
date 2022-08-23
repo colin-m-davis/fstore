@@ -12,8 +12,10 @@ argsubparsers.required = True
 def main(argv=sys.argv[1:]):
     print("hello")
     args = argparser.parse_args(argv)
-    if args.command == "init": cmd_init(args)
-    elif args.command == "connect": cmd_connect(args)
+    if args.command == "init":
+        cmd_init(args)
+    elif args.command == "connect":
+        cmd_connect(args)
 
 class Database():
 
@@ -28,9 +30,9 @@ class Database():
         data = ""
         data_path = self.get_path("data")
         if os.stat(data_path).st_size > 0:
-            f = open(data_path, "rb")
-            data = zlib.decompress(f.read()).decode()
-            f.close()
+            file = open(data_path, "rb")
+            data = zlib.decompress(file.read()).decode()
+            file.close()
 
         self.root = deserialize(data)
 
@@ -40,12 +42,12 @@ class Database():
     # Serialize updated tree and write to data file
     def save(self):
         data_path = self.get_path("data")
-        f = open(data_path, "wb")
+        file = open(data_path, "wb")
 
-        s = serialize(self.root)
+        string = serialize(self.root)
 
-        f.write(zlib.compress(s.encode()))
-        f.close()
+        file.write(zlib.compress(string.encode()))
+        file.close()
 
 def db_init(path):
     print("(INIT)")
@@ -54,12 +56,12 @@ def db_init(path):
         raise Exception("%s already exists" % path)
     os.makedirs(path)
 
-    f = open(os.path.join(path, "meta"), "x")
-    f.close()
-    f = open(os.path.join(path, "data"), "x")
-    f.close()
-    f = open(os.path.join(path, "logs"), "x")
-    f.close()
+    file = open(os.path.join(path, "meta"), "x")
+    file.close()
+    file = open(os.path.join(path, "data"), "x")
+    file.close()
+    file = open(os.path.join(path, "logs"), "x")
+    file.close()
 
 def db_connect(path):
     print("(CONNECT)")
@@ -77,7 +79,7 @@ def db_connect(path):
             key = input("(GET) Key: ")
 
             result = search(db.root, key)
-            
+
             if result:
                 print(result)
             else:
