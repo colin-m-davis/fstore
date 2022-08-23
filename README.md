@@ -1,5 +1,6 @@
 # FStore
-A simple key-value store written in Python. 
+A simple key-value store written in Python.
+https://pypi.org/project/FStore/
 
 ## Usage
 Install FStore in your terminal with pip: `$ pip install fstore`
