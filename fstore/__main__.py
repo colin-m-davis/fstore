@@ -85,7 +85,6 @@ def db_connect(path):
             else:
                 print("(GET) Key not found")
                 
-        
         elif cmd == "put":
             key = input("(PUT) Key: ")
             val = input("(PUT) Value: ")
