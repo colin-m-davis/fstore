@@ -1,27 +1,25 @@
 from collections import deque
 
-# Create a node
 class Node:
+    """tree element"""
     def __init__(self, key, val):
         self.key = key
         self.val = val
         self.left = None
         self.right = None
 
-# Search by key
 def search(root, key):
+    """search tree by key"""
     if not root:
-        return
+        return None
     if key < root.key:
         return search(root.left, key)
-    elif key > root.key:
+    if key > root.key:
         return search(root.right, key)
-    else:
-        return root.val
+    return root.val
 
-# Insert a node
 def insert(root, key, val):
-
+    """insert a node"""
     # Return a new node if the tree is empty
     if not root:
         return Node(key, val)
@@ -34,25 +32,25 @@ def insert(root, key, val):
 
     return root
 
-# Find the inorder successor
 def inorder_successor(root):
+    """find inorder successor"""
     current = root
 
-    while(current.left):
+    while current.left:
         current = current.left
 
     return current
 
-# Delete node
 def delete(root, key):
-    # Key is not in tree
+    """delete node"""
     if not root:
+        # Key is not in tree
         return root
 
     # Find the node to be deleted
     if key < root.key:
         root.left = delete(root.left, key)
-    elif(key > root.key):
+    elif key > root.key:
         root.right = delete(root.right, key)
     else:
         # If the node is with only one child or no child
@@ -61,7 +59,7 @@ def delete(root, key):
             root = None
             return temp
 
-        elif root.right is None:
+        if root.right is None:
             temp = root.left
             root = None
             return temp
@@ -77,11 +75,11 @@ def delete(root, key):
 
     return root
 
-# Serialize tree to string
 def serialize(root):
+    """serialize tree to string"""
     if not root:
         return ""
-    
+
     result = ""
     q = deque()
     q.append(root)
@@ -100,11 +98,11 @@ def serialize(root):
         else:
             result += "NULL:NULL"
         result += ","
-    
+
     return result
 
-# Deserialize tree from string
 def deserialize(string):
+    """deserialize tree from string"""
     # Parse string into array of strings
     tmp = string.split(",")
     data = []
@@ -115,8 +113,8 @@ def deserialize(string):
 
     return make(data)
 
-# Make tree from array of key-value pairs
 def make(elements):
+    """make tree from array of key-value pairs"""
     root = None
 
     for element in elements:
@@ -126,5 +124,5 @@ def make(elements):
         # Skip over null nodes
         if key != "NULL":
             root = insert(root, key, val)
-        
+
     return root
