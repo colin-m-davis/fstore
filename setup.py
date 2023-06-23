@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='FStore',
-    version='1.0.1',
+    version='1.0.2',
     author='Colin Davis',
     author_email='colinmichaelsdavis@gmail.com',
     packages=find_packages(),
