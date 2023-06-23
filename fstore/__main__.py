@@ -84,7 +84,7 @@ def db_connect(path):
                 print(result)
             else:
                 print("(GET) Key not found")
-                
+
         elif cmd == "put":
             key = input("(PUT) Key: ")
             val = input("(PUT) Value: ")
@@ -103,7 +103,7 @@ def db_connect(path):
 
         else:
             print("Not sure what you meant by that.")
-        
+
         cmd = None
 
 argsp = argsubparsers.add_parser("init", help="Initialize a new database.")
